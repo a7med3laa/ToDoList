@@ -1,5 +1,5 @@
 //jshint esversion:6
-
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose= require("mongoose");
@@ -18,7 +18,7 @@ app.use(express.static("public"));
 
 ///////////////////////////////////////////////////
 //connect to DB
-mongoose.connect("mongodb+srv://admin_ahmed:Eng27med3laa@cluster0.xsppa.mongodb.net/project0?retryWrites=true&w=majority/todolistDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://"+ process.env.DB_USER+":"+process.env.DB_PASS+"@"+process.env.DB_HOST, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB Connection error"));
 
@@ -55,7 +55,7 @@ const List = mongoose.model("List" , listSchema);
 
 const queryCity= "cairo";
 var weatherResult;
-const url="https://api.openweathermap.org/data/2.5/weather?&units=metric&q="+queryCity+"&appid=dc6e1121944625d7aef385004c56a784";
+const url="https://api.openweathermap.org/data/2.5/weather?&units=metric&q="+queryCity+"&appid="+process.env.APP_ID;
 
 https.get(url,function (result) {
 
